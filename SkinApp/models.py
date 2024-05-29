@@ -36,8 +36,16 @@ class clinicInfo(models.Model):
     locationLink = models.TextField(max_length=2000)
     emailAddress = models.TextField(max_length=2000)
 
+class typeApp(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
+
 class Appointment(models.Model):
     name = models.CharField(max_length=100)
+    type = models.ForeignKey(typeApp, on_delete=models.CASCADE, related_name='appointments', default=1)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     date = models.DateField()
