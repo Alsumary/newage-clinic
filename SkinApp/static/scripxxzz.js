@@ -1,6 +1,4 @@
 const navbar = document.querySelector('.nvnov')
-const navLinks = document.querySelectorAll('.nvnvLink')
-const sections = document.querySelectorAll('.seo')
 
 window.addEventListener('scroll', () => {
     if(window.scrollY > 30 ) {
@@ -227,39 +225,5 @@ subForm.addEventListener('submit', (event) =>  {
         console.log("Selected value:", selectedValue);
       }
 })
-
-
-window.onscroll =() => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight
-        let id = sec.getAttribute('id');
-
-        if(top >= offset && top < offset + height) {
-            navLinks.forEach(link => {
-                if(id == "home"){
-                    link.classList.remove('text-white')
-                    link.classList.remove('bg-blue-700')
-                    link.classList.remove('md:text-blue-700')
-                    link.classList.remove('text-gray-900')
-                    document.querySelector(".nvnvLink[href*='#home']").classList.add('text-white')
-                    document.querySelector(".nvnvLink[href*='#home']").classList.add('bg-blue-700')
-                    document.querySelector(".nvnvLink[href*='#home']").classList.add('md:bg-transparent')
-                    document.querySelector(".nvnvLink[href*='#home']").classList.add('md:text-blue-700')
-                }else{
-                    link.classList.remove('text-white')
-                    link.classList.remove('bg-blue-700')
-                    link.classList.remove('md:text-blue-700')
-                    link.classList.remove('text-gray-900')
-                    document.querySelector('.nvnvLink[href*=' + id + ']').classList.add('text-white')
-                    document.querySelector('.nvnvLink[href*=' + id + ']').classList.add('bg-blue-700')
-                    document.querySelector('.nvnvLink[href*=' + id + ']').classList.add('md:bg-transparent')
-                    document.querySelector('.nvnvLink[href*=' + id + ']').classList.add('md:text-blue-700')
-                }
-            })
-        }
-    });
-}
 
 
