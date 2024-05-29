@@ -110,8 +110,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
   <script src="{% static 'scripxxzz.js' %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
-
+  {% with request.resolver_match.url_name as url_name %}
+  {% if url_name == 'index' %}
   <script>
+    
 function onScroll() {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -123,6 +125,9 @@ function onScroll() {
 window.addEventListener('scroll', onScroll)
 
 onScroll();
+
   </script>
+  {% endif %}
+  {% endwith %}
 </body>
 </html>
