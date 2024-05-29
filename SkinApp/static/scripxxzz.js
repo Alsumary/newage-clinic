@@ -214,16 +214,4 @@ subForm.addEventListener('submit', (event) =>  {
         event.preventDefault()
         shakeElement(phone);
     }
-
-
-
-
-    if (selectedValue === "selected") {
-        // Log a message to the console
-        shakeElement(BookType)
-      } else {
-        console.log("Selected value:", selectedValue);
-      }
 })
-
-
