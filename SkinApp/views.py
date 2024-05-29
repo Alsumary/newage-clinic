@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from .models import home, about, OurTeam, teamMemebers, Treatments, clinicInfo, Appointment
+from .models import home, about, OurTeam, teamMemebers, Treatments, clinicInfo, Appointment, typeApp
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -26,6 +26,7 @@ def index(request):
 def booking(request):
     clinicInfoDB = clinicInfo.objects.get(pk=1)
     appointmentDB = Appointment.objects.all()
+    typeAppDB = typeApp.objects.all()
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -33,6 +34,8 @@ def booking(request):
         time = request.POST.get('time')
         date = request.POST.get('date')
         description = request.POST.get('description')
+        type_id = request.POST.get('Type')
+        bookType = typeApp.objects.get(id=type_id)
         # Create an instance of the Appointment model
         if description:
             appointment = Appointment(
@@ -40,26 +43,29 @@ def booking(request):
                 email=email,
                 phone=phone,
                 time=time,
+                type=bookType,
                 date=date,
-                description=description
+                description=description,
             )
         else:
                 appointment = Appointment(
                 name=name,
                 email=email,
                 phone=phone,
+                type=bookType,
                 time=time,
-                date=date
+                date=date,
             )
+        
         # Save the instance to the database
         appointment.save()
         clinicInfoDB = clinicInfo.objects.get(pk=1)
-
         html_message = render_to_string('email_template.html', {
             'name': name,
             'email': email,
             'phone': phone,
             'time': time,
+            'type': bookType.title,
             'date': date,
             'description': description,
         })
@@ -70,12 +76,10 @@ def booking(request):
         recipient_list = ['newageskincareclinic@gmail.com', email]
         send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)
 
-        return render(request, 'booking.html', {
-            'clinicInfoDB':clinicInfoDB,
-            'appoints' : appointmentDB
-        })
+        return HttpResponseRedirect(reverse('booking'))
     else:
         return render(request, 'booking.html', {
             'clinicInfoDB':clinicInfoDB,
-            'appoints' : appointmentDB
+            'appoints' : appointmentDB,
+            'typeApps' : typeAppDB,
         })
