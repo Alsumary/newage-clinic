@@ -45,7 +45,7 @@ class typeApp(models.Model):
 
 class Appointment(models.Model):
     name = models.CharField(max_length=100)
-    type = models.ForeignKey(typeApp, on_delete=models.CASCADE, related_name='appointments', default=1)
+    type = models.ForeignKey(typeApp, on_delete=models.CASCADE, related_name='appointments')
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     date = models.DateField()
